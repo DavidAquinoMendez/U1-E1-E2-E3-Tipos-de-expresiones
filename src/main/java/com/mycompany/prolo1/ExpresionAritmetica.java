@@ -17,41 +17,41 @@ public class ExpresionAritmetica {
     System.out.println("Escribe una expresión algebraica: ");
     //**( 9 + .89 ) * 1 / 4 ^ 2 - 2  -1.381875
     Scanner leer = new Scanner(System.in);
- 
+    //espacios entre cada expresion 
     String infi = leer.nextLine();
     String infix = espacios(infi);
       
-    System.out.printf("Postfija: %s\n", infixToPostfix(infix)); 
+    System.out.printf("Postfija: %s\n", infixToPostfix(infix)); // cadena de caracteres %s y despues salto de 
+                                                               //linea aplicamos el metodo a la cadena ingresada
 
 
-  
-    String[] post = infixToPostfix(infix).split(" ");   
-    
-  
-    Stack < String > E = new Stack < String > (); 
-    Stack < String > P = new Stack < String > (); 
+    //*****codigo para obtener el resultado de la operacion 
+    String[] post = infixToPostfix(infix).split(" ");   // asignamos un array donde meteremos la cadena dividida por espacios
+   
+    //Declaración de las pilas
+    Stack < String > E = new Stack < String > (); //Pila entrada
+    Stack < String > P = new Stack < String > (); //Pila de operandos
 
-    
+    //Añadir post (array) a la Pila de entrada (E)
     for (int i = post.length - 1; i >= 0; i--) {
       E.push(post[i]);
     }
 
     
     String operadores = "+-*/%^";
-    while (!E.isEmpty()) { 
-      if (operadores.contains("" + E.peek())) {  
-          
-          
-        P.push(opera(E.pop(), P.pop(), P.pop()) + "");
-        
-        
+    while (!E.isEmpty()) { //mientras la cadena no esta vacia
+      if (operadores.contains("" + E.peek())) {  //si los operadores declarados son iguales al elemento retirado 
+                                                 // de la cima de la pila
+        P.push(evaluar(E.pop(), P.pop(), P.pop()) + "");//lo apila en la pila P y retira los elementos de la 
+                                                        // pila E de acuerdo al numero 1 y 2 y al operador obtenido hace
+                                                        //la operacion 
       }else {
-        P.push(E.pop());
+        P.push(E.pop());//si solo es un numero lo apila en la pila p hasta que salga un operador
       }
     }
 
     //Mostrar resultados:
-    System.out.println("Resultado: " + P.peek()); 
+    System.out.println("Resultado: " + P.peek()); //imrpime el resultado devolviendo el ultimo elemento de la pila
     
         }
     
@@ -103,8 +103,8 @@ sb.append(ops.charAt(s.pop())).append(' ');
 return sb.toString();
 }
     
-   
-    private static double opera (String op, String n2, String n1) {
+    //*********metodo para obtener el resultado de la operacion 
+    private static double evaluar(String op, String n2, String n1) {
     double num1 = Double.parseDouble(n1);
     double num2 = Double.parseDouble(n2);
     if (op.equals("+")) return (num1 + num2);
@@ -117,13 +117,13 @@ return sb.toString();
     return 0;
   }
 
-   
+    //espacios entre expresión algebraica
   private static String espacios(String exp) {
   
     String simbols = "+-*/()^";
     String expresion = "";
  
-  
+    //Deja espacios entre operadores
     for (int i = 0; i < exp.length(); i++) {
       if (simbols.contains("" + exp.charAt(i))) {
         expresion += " " + exp.charAt(i) + " "; 

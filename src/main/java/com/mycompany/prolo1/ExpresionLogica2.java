@@ -20,6 +20,7 @@ public class ExpresionLogica2 {
          int conn=0,conc=0,cons=0;
          String elenum="";
          String elestr="";
+         //hola
          String elecha="";
          for (int i = 0; i < frase.length; i++) {
              if (Numero(frase[i]) == true) {
